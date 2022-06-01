@@ -1,5 +1,5 @@
 # pbrAsteroid
-Procedural 3D asteroid in OpenGL using physically based rendering, video: https://www.youtube.com/watch?v=rx2Aa9UDQPo. Run exe from folder above data folder.
+Procedural 3D asteroid in OpenGL using physically based rendering. Run exe from folder above data folder.
 
 # Controls
 WASD - forward, backward, strafe left/right
