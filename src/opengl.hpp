@@ -1353,9 +1353,9 @@ public:
 		static ShaderProgram pbrProgram;
 		if (!pbrProgram.IsUsable())
 		{
-			GLint maxTessGenLevel = 0;
-			glGetIntegerv(GL_MAX_TESS_GEN_LEVEL, &maxTessGenLevel);
-			std::cout << "Max tesselation generation level: " << maxTessGenLevel << std::endl;
+// 			GLint maxTessGenLevel = 0;
+// 			glGetIntegerv(GL_MAX_TESS_GEN_LEVEL, &maxTessGenLevel);
+// 			std::cout << "Max tesselation generation level: " << maxTessGenLevel << std::endl;
 
 			pbrProgram =
 				ShaderProgram{{ std::make_tuple(GL_VERTEX_SHADER, 			Shader::GetFileContents("data/shaders/pbr_asteroid_vs.glsl")),
