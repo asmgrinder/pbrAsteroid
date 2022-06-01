@@ -307,9 +307,9 @@ vec4 height_map(in vec3 Pos, in int Start, in float Count, in float Multiplier)
 		float rnd1 = random3D(pos1);
 		float rnd2 = random3D(pos2);
 		float rnd3 = random3D(pos3);
-		rnd1 = 1.0 - rnd1 * rnd1;
-		rnd2 = 1.0 - rnd2 * rnd2;
-		rnd3 = 1.0 - rnd3 * rnd3;
+// 		rnd1 = 1.0 - rnd1 * rnd1;
+// 		rnd2 = 1.0 - rnd2 * rnd2;
+// 		rnd3 = 1.0 - rnd3 * rnd3;
 
 		vec3 partial_normal = vec3(0., 0., 0.);
 		height += calculateHeightAndNormal(rnd1, rnd2, rnd3, intPow, frac, outside_crater,
