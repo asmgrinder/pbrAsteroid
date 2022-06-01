@@ -24,7 +24,7 @@ layout(location=4) out vec3 bitangent_es_in[];
 #include "asteroid_base.glsl"
 
 #define MAX_EDGE_LENGTH 12.0
-#define MAX_TESS 28
+#define MAX_TESS 32
 
 vec2 getScreenPos(in vec4 ViewPoint)
 {
