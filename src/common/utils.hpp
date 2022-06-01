@@ -34,9 +34,4 @@ public:
 		}
 		return levels;
 	}
-
-// #if _WIN32
-// 	static std::string convertToUTF8(const std::wstring& wstr);
-// 	static std::wstring convertToUTF16(const std::string& str);
-// #endif // _WIN32
 };

@@ -11,6 +11,6 @@
 
 // Enable usage of more performant GPUs on laptops.
 extern "C" {
-// 	EXPORT_SYMBOL int NvOptimusEnablement = 1;
-// 	EXPORT_SYMBOL int AmdPowerXpressRequestHighPerformance = 1;
+	EXPORT_SYMBOL int NvOptimusEnablement = 1;
+	EXPORT_SYMBOL int AmdPowerXpressRequestHighPerformance = 1;
 }

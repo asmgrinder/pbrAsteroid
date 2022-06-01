@@ -55,7 +55,6 @@ Application::~Application()
 
 void Application::run(const std::unique_ptr<RendererInterface>& renderer)
 {
-// 	glfwWindowHint(GLFW_RESIZABLE, 0);
 	m_window = renderer->initialize(DisplaySizeX, DisplaySizeY, DisplaySamples);
 
 	glfwSetWindowUserPointer(m_window, this);
@@ -87,9 +86,6 @@ void Application::run(const std::unique_ptr<RendererInterface>& renderer)
 			fpsCounter = 0;
 			start = std::chrono::steady_clock::now();
 		}
-
-// 		m_sceneSettings.pitch += 0.01f;
-// 		m_sceneSettings.yaw += 0.1f;
 
 		glfwPollEvents();
 	}
