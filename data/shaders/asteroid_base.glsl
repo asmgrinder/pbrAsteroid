@@ -1,14 +1,11 @@
 
 #define height_mapping(x) (0.95 + 0.15 * x)
 
-// #define norm(x) ((dot(x, x) > 0.0) ? normalize(x) : x)
-
 #define rads(x) (x * 3.1415926535897932384626433832795 / 180)
 
 #define START_LEVEL 1
 #define MAX_LEVEL 22
-//3.1415926535897932384626433832795
-// #define M_PI rads(180)
+
 #define ICO_POINT0_X 0.8944271909999159
 #define ICO_POINT0_Y 0.
 #define ICO_POINT0_Z 0.447213595499958
@@ -17,31 +14,17 @@
 #define ICO_POINT1_Y 0.5257311121191336
 #define ICO_POINT1_Z -0.447213595499958
 
-// // Version 3
-// float random( vec2 p )
-// {
-//     vec2 K1 = vec2(
-//         23.14069263277926, // e^pi (Gelfond's constant)
-//          2.665144142690225 // 2^sqrt(2) (Gelfondâ€“Schneider constant)
-//     );
-//     return fract( cos( dot(p,K1) ) * 12345.6789 );
-// }
-
 #define PHI 1.61803398874989484820459
 
 float random3D(in vec3 p)
 {
 	vec2 arg = p.xy * (1. + log(p.z + 10.));
 	return fract(sin(dot(arg * rads(180) / 4096., vec2(12.9898, 78.233))) * 43758.5453123);//random2D(arg);
-	// p *= vec3(1.0 / vec2(113.0), 17.0);
-	// vec3 pp = (p + 50.0) / 23.0;
-	// return fract(sin(2.0 * length(pp.xy * PHI - pp.xy) * pp.z) * pp.x);
 }
 
 float random2D (in vec2 p)
 {
-	return random3D(vec3(p, PHI));//fract(sin(dot(st * rads(180) / 4096., vec2(12.9898, 78.233))) * 43758.5453123);
-	// return random3D(vec3(st, PHI));
+	return random3D(vec3(p, PHI));
 }
 
 vec2 rotate2D(vec2 src, float ang)
