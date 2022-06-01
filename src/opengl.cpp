@@ -45,8 +45,6 @@ GLFWwindow* Renderer::initialize(int width, int height, int maxSamples)
 		throw std::runtime_error("Failed to initialize OpenGL extensions loader");
 	}
 
-// 	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &mCapabilities.maxAnisotropy);
-
 #ifdef _DEBUG
 	glDebugMessageCallback(Renderer::logMessage, nullptr);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -105,8 +103,6 @@ void Renderer::shutdown()
 
 	mSkybox.Release();
 	mPbrAsteroid.Release();
-	// mPbrModel.Release();
-	// mGlass.Release();
 	mFullScreenQuad.Release();
 
 	mTonemapProgram.Release();
@@ -142,16 +138,12 @@ std::function<void (int w, int h)> Renderer::setup()
 
 	mSkybox = MeshGeometry{ Mesh::fromFile("data/meshes/skybox.obj") };
 	mPbrAsteroid = PbrAsteroid{ Mesh::fromFile("data/meshes/asteroid6.fbx"), mEnvPtr };
-//	mPbrModel = PbrMesh{ Mesh::fromFile("data/meshes/asteroid.fbx"), mEnvPtr };
-	// mGlass    = PbrMesh{ Mesh::fromFile("data/meshes/plate.fbx"), mEnvPtr };
 
 	return [&](int w, int h) { glViewport(0, 0, w, h); };
 }
 
 void Renderer::renderScene(bool OpaquePass)
 {
-	// mPbrModel.Render(OpaquePass);
-	// mGlass.Render(OpaquePass);
 	mPbrAsteroid.Render(OpaquePass);
 }
 
@@ -237,16 +229,11 @@ void Renderer::render(GLFWwindow* window, const ViewSettings& view, const SceneS
 	{
 		lightsArr[i] = scene.lights[i];
 	}
-	glm::mat4 pbrModelMat = //glm::translate(glm::mat4{ 1.0f }, { 0.f, 0.0f, 40.0f }) *
+	glm::mat4 pbrModelMat =
 								glm::scale(glm::mat4{ 1.0f }, 2.5f * glm::vec3{ 1.0f, 1.0f, 1.0f }) *
 								glm::eulerAngleXY(glm::radians(scene.pitch), glm::radians(scene.yaw));
-//	mPbrModel.SetShadingUniforms(lightsArr, projectionMatrix, viewMatrix, pbrModelMat);
 	const glm::vec4 viewport = glm::vec4{ 0, 0, fbWidth, fbHeight };
 	mPbrAsteroid.SetShadingUniforms(lightsArr, viewport, projectionMatrix, viewMatrix, pbrModelMat);
-
-	// glm::mat4 glassModelMat = /*glm::translate(glm::mat4{ 1.0f }, { 10.f, 0.0f, 0.0f })
- 	// 							* */glm::eulerAngleXY(glm::radians(scene.pitch), glm::radians(scene.yaw));
-	// mGlass.SetShadingUniforms(lightsArr, projectionMatrix, viewMatrix, glassModelMat);
 
 	renderScene(true);
 

@@ -1434,8 +1434,7 @@ protected:
 };
 
 //==========================================================================================================================
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//==========================================================================================================================
+
 class Renderer final : public RendererInterface
 {
 public:
@@ -1451,12 +1450,6 @@ protected:
 	static void logMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 #endif
 
-// 	struct
-// 	{
-// 		float maxAnisotropy = 1.0f;
-// 	}
-// 	mCapabilities;
-
 	std::shared_ptr<Framebuffer> mFramebuffer, mResolveFramebuffer;
 
 	std::shared_ptr<Camera> mCameraPtr;
@@ -1464,8 +1457,6 @@ protected:
 	MeshGeometry mFullScreenQuad;
 	MeshGeometry mSkybox;
 	PbrAsteroid mPbrAsteroid;
-	// PbrMesh mPbrModel;
-	// PbrMesh mGlass;
 
 	MeshGeometry mEmptyVao;
 
