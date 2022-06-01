@@ -9,4 +9,4 @@ QE - upper/lower
 ZC - camera tilt
 
 # Known problems
-I didn't have opportunity to debug this (still rather raw code) on many enough systems, therefore there is no guarantee that it will run everywhere. So this code is provided as is, with no warranty of any kind. I still hope that this code can be source for new ideas.
+I didn't have opportunity to debug this (still rather raw code) on many enough systems, therefore there is no guarantee that it will run everywhere. So this code is provided as is, with no warranty of any kind. I hope that this code can be source for new ideas.
