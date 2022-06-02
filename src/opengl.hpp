@@ -904,7 +904,7 @@ public:
 		{
 			Create();
 		}
-		Update();//glNamedBufferSubData(mId, 0, sizeof(T), &mData);
+		Update();
 		glBindBufferBase(GL_UNIFORM_BUFFER, Slot, mId);
 	}
 
@@ -1346,6 +1346,7 @@ public:
 		tessUniforms.modelViewMat = ViewMat * ModelMat;
 		tessUniforms.projectionMat = ProjectionMat;
 		tessUniforms.viewport = Viewport;
+		glGetIntegerv(GL_MAX_TESS_GEN_LEVEL, &tessUniforms.maxTessLevel);
 	}
 
 	void Render(bool OpaquePass) override
@@ -1353,10 +1354,6 @@ public:
 		static ShaderProgram pbrProgram;
 		if (!pbrProgram.IsUsable())
 		{
-// 			GLint maxTessGenLevel = 0;
-// 			glGetIntegerv(GL_MAX_TESS_GEN_LEVEL, &maxTessGenLevel);
-// 			std::cout << "Max tesselation generation level: " << maxTessGenLevel << std::endl;
-
 			pbrProgram =
 				ShaderProgram{{ std::make_tuple(GL_VERTEX_SHADER, 			Shader::GetFileContents("data/shaders/pbr_asteroid_vs.glsl")),
 								std::make_tuple(GL_TESS_CONTROL_SHADER, 	Shader::GetFileContents("data/shaders/pbr_asteroid_cs.glsl")),
@@ -1429,12 +1426,14 @@ protected:
 		glm::mat4 modelViewMat;
 		glm::mat4 projectionMat;
 		glm::vec4 viewport;
+		GLint maxTessLevel;
 	};
 	UniformBuffer<TessControlMatrixUniform> mTessControlUB;
 };
 
 //==========================================================================================================================
-
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//==========================================================================================================================
 class Renderer final : public RendererInterface
 {
 public:
