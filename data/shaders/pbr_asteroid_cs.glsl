@@ -67,8 +67,6 @@ void main()
         vec4 p1 = projectionMatrix * pp[1];
         vec4 p2 = projectionMatrix * pp[2];
 
-        // float ccw = cross(p1.xyz / p1.w - p0.xyz / p0.w, p2.xyz / p2.w - p0.xyz / p0.w).z;
-
         p0 *= sign(p0.w);
         p1 *= sign(p1.w);
         p2 *= sign(p2.w);
