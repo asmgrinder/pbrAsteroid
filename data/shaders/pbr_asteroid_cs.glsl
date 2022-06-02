@@ -59,9 +59,9 @@ void main()
         vec4 noise2 = height_map(normalize(position_cs_in[2]), START_LEVEL, MAX_LEVEL - 5, 1.0);
 
         vec4 pp[3];
-        pp[0] = modelViewMatrix * vec4(0.9 * height_mapping(noise0.a) * position_cs_in[0], 1.0);
-        pp[1] = modelViewMatrix * vec4(0.9 * height_mapping(noise1.a) * position_cs_in[1], 1.0);
-        pp[2] = modelViewMatrix * vec4(0.9 * height_mapping(noise2.a) * position_cs_in[2], 1.0);
+        pp[0] = modelViewMatrix * vec4(0.95 * height_mapping(noise0.a) * position_cs_in[0], 1.0);
+        pp[1] = modelViewMatrix * vec4(0.95 * height_mapping(noise1.a) * position_cs_in[1], 1.0);
+        pp[2] = modelViewMatrix * vec4(0.95 * height_mapping(noise2.a) * position_cs_in[2], 1.0);
 
         vec4 p0 = projectionMatrix * pp[0];
         vec4 p1 = projectionMatrix * pp[1];
