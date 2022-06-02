@@ -59,23 +59,25 @@ void main()
         vec4 noise2 = height_map(normalize(position_cs_in[2]), START_LEVEL, MAX_LEVEL - 5, 1.0);
 
         vec4 pp[3];
-        pp[0] = modelViewMatrix * vec4(height_mapping(noise0.a) * position_cs_in[0], 1.0);
-        pp[1] = modelViewMatrix * vec4(height_mapping(noise1.a) * position_cs_in[1], 1.0);
-        pp[2] = modelViewMatrix * vec4(height_mapping(noise2.a) * position_cs_in[2], 1.0);
+        pp[0] = modelViewMatrix * vec4(0.95 * height_mapping(noise0.a) * position_cs_in[0], 1.0);
+        pp[1] = modelViewMatrix * vec4(0.95 * height_mapping(noise1.a) * position_cs_in[1], 1.0);
+        pp[2] = modelViewMatrix * vec4(0.95 * height_mapping(noise2.a) * position_cs_in[2], 1.0);
 
         vec4 p0 = projectionMatrix * pp[0];
         vec4 p1 = projectionMatrix * pp[1];
         vec4 p2 = projectionMatrix * pp[2];
 
+        // float ccw = cross(p1.xyz / p1.w - p0.xyz / p0.w, p2.xyz / p2.w - p0.xyz / p0.w).z;
+
         p0 *= sign(p0.w);
         p1 *= sign(p1.w);
         p2 *= sign(p2.w);
 
-        const float mult = 1.5;
-        if (   (p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w)
-            || (p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w)
-            || (p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w)
-            || (p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w))
+        const float mult = 1.4;
+        if (p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w
+            || p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w
+            || p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w
+            || p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w)
         {
             gl_TessLevelOuter[0] = gl_TessLevelOuter[1] = gl_TessLevelOuter[2] = 0;
             gl_TessLevelInner[0] = 0;
