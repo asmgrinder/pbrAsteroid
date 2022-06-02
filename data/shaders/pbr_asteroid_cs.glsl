@@ -24,7 +24,7 @@ layout(location=4) out vec3 bitangent_es_in[];
 #include "asteroid_base.glsl"
 
 #define MAX_EDGE_LENGTH 10.0
-#define MAX_TESS 24
+#define MAX_TESS 28
 
 vec2 getScreenPos(in vec4 ViewPoint)
 {
@@ -32,14 +32,8 @@ vec2 getScreenPos(in vec4 ViewPoint)
     return vp * viewport_cs.zw + viewport_cs.xy;
 }
 
-int getTessLevel(int Id)
+int getTessLevel(vec4 p1, vec4 p2)
 {
-    vec3 pos1 = position_cs_in[(Id + 1) % 3];
-    vec3 pos2 = position_cs_in[(Id + 2) % 3];
-
-    vec4 p1 = modelViewMatrix * vec4(pos1, 1.0);
-    vec4 p2 = modelViewMatrix * vec4(pos2, 1.0);
-
     vec4 pc = 0.5 * (p1 + p2);
     float len = 0.5 * length(vec3(p1) - vec3(p2));
     vec4 pp1 = pc - vec4(len, 0.0, 0.0, 0.0);
@@ -49,7 +43,6 @@ int getTessLevel(int Id)
                             - getScreenPos(projectionMatrix * pp2));
     return int(0.5 + min(MAX_TESS, max(1, scrLen / MAX_EDGE_LENGTH)));
 }
-
 
 void main()
 {
@@ -61,10 +54,41 @@ void main()
 
     if (0 == gl_InvocationID)
     {
-        gl_TessLevelOuter[0] = getTessLevel(0);
-        gl_TessLevelOuter[1] = getTessLevel(1);
-        gl_TessLevelOuter[2] = getTessLevel(2);
-        float maxLevel = max(gl_TessLevelOuter[0], max(gl_TessLevelOuter[1], gl_TessLevelOuter[2]));
-        gl_TessLevelInner[0] = int(0.5 + min(MAX_TESS, max(1, maxLevel - 1)));
+        vec4 noise0 = height_map(normalize(position_cs_in[0]), START_LEVEL, MAX_LEVEL - 5, 1.0);
+        vec4 noise1 = height_map(normalize(position_cs_in[1]), START_LEVEL, MAX_LEVEL - 5, 1.0);
+        vec4 noise2 = height_map(normalize(position_cs_in[2]), START_LEVEL, MAX_LEVEL - 5, 1.0);
+
+        vec4 pp[3];
+        pp[0] = modelViewMatrix * vec4(height_mapping(noise0.a) * position_cs_in[0], 1.0);
+        pp[1] = modelViewMatrix * vec4(height_mapping(noise1.a) * position_cs_in[1], 1.0);
+        pp[2] = modelViewMatrix * vec4(height_mapping(noise2.a) * position_cs_in[2], 1.0);
+
+        vec4 p0 = projectionMatrix * pp[0];
+        vec4 p1 = projectionMatrix * pp[1];
+        vec4 p2 = projectionMatrix * pp[2];
+
+        // float ccw = cross(p1.xyz / p1.w - p0.xyz / p0.w, p2.xyz / p2.w - p0.xyz / p0.w).z;
+
+        p0 *= sign(p0.w);
+        p1 *= sign(p1.w);
+        p2 *= sign(p2.w);
+
+        const float mult = 1.4;
+        if (p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w
+            || p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w
+            || p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w
+            || p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w)
+        {
+            gl_TessLevelOuter[0] = gl_TessLevelOuter[1] = gl_TessLevelOuter[2] = 0;
+            gl_TessLevelInner[0] = 0;
+        }
+        else
+        {
+            gl_TessLevelOuter[0] = getTessLevel(pp[1], pp[2]);
+            gl_TessLevelOuter[1] = getTessLevel(pp[2], pp[0]);
+            gl_TessLevelOuter[2] = getTessLevel(pp[0], pp[1]);
+            float maxLevel = max(gl_TessLevelOuter[0], max(gl_TessLevelOuter[1], gl_TessLevelOuter[2]));
+            gl_TessLevelInner[0] = int(0.5 + min(MAX_TESS, max(1, maxLevel - 1)));
+        }
     }
 }
