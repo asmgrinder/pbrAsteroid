@@ -71,11 +71,11 @@ void main()
         p1 *= sign(p1.w);
         p2 *= sign(p2.w);
 
-        const float mult = 1.4;
-        if (p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w
-            || p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w
-            || p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w
-            || p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w)
+        const float mult = 1.5;
+        if (   (p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w)
+            || (p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w)
+            || (p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w)
+            || (p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w))
         {
             gl_TessLevelOuter[0] = gl_TessLevelOuter[1] = gl_TessLevelOuter[2] = 0;
             gl_TessLevelInner[0] = 0;
