@@ -137,7 +137,7 @@ std::function<void (int w, int h)> Renderer::setup()
 	mEnvPtr = std::make_shared<Environment>(Image::fromFile("data/textures/skybox.hdr", 3));
 
 	mSkybox = MeshGeometry{ Mesh::fromFile("data/meshes/skybox.obj") };
-	mPbrAsteroid = PbrAsteroid{ Mesh::fromFile("data/meshes/asteroid6.fbx"), mEnvPtr };
+	mPbrAsteroid = PbrAsteroid{ Mesh::fromFile("data/meshes/asteroid7.fbx"), mEnvPtr };
 
 	return [&](int w, int h) { glViewport(0, 0, w, h); };
 }
