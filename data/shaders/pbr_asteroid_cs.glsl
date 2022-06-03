@@ -82,7 +82,7 @@ void main()
         p2 *= sign(p2.w);
         p3 *= sign(p3.w);
 
-        const float mult = 2.1;
+        const float mult = 2.5;
         if (   p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w && p3.x >  mult * p3.w
             || p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w && p3.x < -mult * p3.w
             || p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w && p3.y >  mult * p3.w
