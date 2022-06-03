@@ -25,7 +25,7 @@ layout(location=4) out vec3 bitangent_es_in[];
 #include "asteroid_base.glsl"
 
 #define MAX_EDGE_LENGTH 10.0
-#define MAX_TESS min(28, maxTessLevel)
+#define MAX_TESS min(20, maxTessLevel)
 
 vec2 getScreenPos(in vec4 ViewPoint)
 {
@@ -55,28 +55,38 @@ void main()
 
     if (0 == gl_InvocationID)
     {
+        float l0 = length(position_cs_in[0]);
+        float l1 = length(position_cs_in[1]);
+        float l2 = length(position_cs_in[2]);
+        float l3 = 0.3333333333 * (l0 + l1 + l2);
+        vec3 position3 = normalize(0.333333333 * (position_cs_in[0] + position_cs_in[1] + position_cs_in[2]));
+
         vec4 noise0 = height_map(normalize(position_cs_in[0]), START_LEVEL, MAX_LEVEL - 5, 1.0);
         vec4 noise1 = height_map(normalize(position_cs_in[1]), START_LEVEL, MAX_LEVEL - 5, 1.0);
         vec4 noise2 = height_map(normalize(position_cs_in[2]), START_LEVEL, MAX_LEVEL - 5, 1.0);
+        vec4 noise3 = height_map(position3, START_LEVEL, MAX_LEVEL - 5, 1.0);
 
-        vec4 pp[3];
+        vec4 pp[4];
         pp[0] = modelViewMatrix * vec4(0.95 * height_mapping(noise0.a) * position_cs_in[0], 1.0);
         pp[1] = modelViewMatrix * vec4(0.95 * height_mapping(noise1.a) * position_cs_in[1], 1.0);
         pp[2] = modelViewMatrix * vec4(0.95 * height_mapping(noise2.a) * position_cs_in[2], 1.0);
+        pp[3] = modelViewMatrix * vec4(0.95 * height_mapping(noise3.a) * l3 * position3, 1.0);
 
         vec4 p0 = projectionMatrix * pp[0];
         vec4 p1 = projectionMatrix * pp[1];
         vec4 p2 = projectionMatrix * pp[2];
+        vec4 p3 = projectionMatrix * pp[3];
 
         p0 *= sign(p0.w);
         p1 *= sign(p1.w);
         p2 *= sign(p2.w);
+        p3 *= sign(p3.w);
 
-        const float mult = 1.9;
-        if (p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w
-            || p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w
-            || p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w
-            || p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w)
+        const float mult = 2.1;
+        if (   p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w && p3.x >  mult * p3.w
+            || p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w && p3.x < -mult * p3.w
+            || p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w && p3.y >  mult * p3.w
+            || p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w && p3.y < -mult * p3.w)
         {
             gl_TessLevelOuter[0] = gl_TessLevelOuter[1] = gl_TessLevelOuter[2] = 0;
             gl_TessLevelInner[0] = 0;

@@ -109,7 +109,7 @@ void main()
 	float smoothing = exp(0.25 * log(koef_scr_diff_fs_in.x));
 	vec4 noise = height_map(normalize(mesh_pos_fs_in), START_LEVEL, levelCount, smoothing);
 
-	if (koef_scr_diff_fs_in.x < 0.7 && koef_scr_diff_fs_in.y > 0)
+	if (koef_scr_diff_fs_in.y > 0 && koef_scr_diff_fs_in.x < 0.75)
 	{
 		float _ang = 0.00005 / length(mesh_pos_fs_in) / koef_scr_diff_fs_in.y;
 		vec3 _eyeDir = normalize(vec3(inverse(modelViewMat) * vec4(0, 0, 0, 1)) - mesh_pos_fs_in);
@@ -129,11 +129,11 @@ void main()
 		// float nmldiff = 1.0 - dot(noise.xyz, normalize(cross(v2, v1)));
 		vec3 _axis = normalize(cross(_eyeDir, _nml));
 		noise.xyz += height_map(normalize(rotationMatrix(_axis,  _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;		
-		noise.xyz += height_map(normalize(rotationMatrix(_axis, -_ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
-		if (koef_scr_diff_fs_in.x < 0.35)
+// 		noise.xyz += height_map(normalize(rotationMatrix(_axis, -_ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
+		if (koef_scr_diff_fs_in.x < 0.45)
 		{
-			noise.xyz += height_map(normalize(rotationMatrix(_axis,  2.5 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
-			noise.xyz += height_map(normalize(rotationMatrix(_axis, -2.5 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
+// 			noise.xyz += height_map(normalize(rotationMatrix(_axis,  2.0 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
+			noise.xyz += height_map(normalize(rotationMatrix(_axis, -2.0 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
 		}
 		noise.xyz = normalize(noise.xyz);
 	}
@@ -148,7 +148,7 @@ void main()
                     	oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c);
 
 	vec4 albedoColor = texture(albedoTexture, texcoord_fs_in);
-	vec3 albedo = vec3(5.5 * exp(2.5 * log(noise.a))) * albedoColor.rgb;
+	vec3 albedo = vec3(6.0 * exp(2.5 * log(noise.a))) * albedoColor.rgb;
 	float metalness = 0.1;//texture(metalnessTexture, vin.texcoord).r;
 	float roughness = 0.9;//texture(roughnessTexture, vin.texcoord).r;
 

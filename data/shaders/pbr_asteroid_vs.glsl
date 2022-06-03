@@ -31,7 +31,7 @@ void main()
 	bitangent_cs_in = bitangent;
 
 	position_cs_in = position;
-	vec4 noise = height_map(normalize(position_cs_in), START_LEVEL, MAX_LEVEL - 5, 1.0);//vec4(normalize(position_cs_in), 0.5);//
+	vec4 noise = height_map(normalize(position_cs_in), START_LEVEL, MAX_LEVEL - 5, 1.0);
 	vec4 proj = modelViewProjectionMatrix * vec4(height_mapping(noise.a) * position_cs_in, 1.0);
 	gl_Position = proj;
 }

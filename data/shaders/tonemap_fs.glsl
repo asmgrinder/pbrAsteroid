@@ -4,7 +4,7 @@
 
 // Tone-mapping & gamma correction.
 
-const float gamma     = 1.6;
+const float gamma     = 1.8;
 const float exposure  = 0.6;
 const float pureWhite = 1.0;
 
