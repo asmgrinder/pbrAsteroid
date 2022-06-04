@@ -24,8 +24,8 @@ layout(location=4) out vec3 bitangent_es_in[];
 
 #include "asteroid_base.glsl"
 
-#define MAX_EDGE_LENGTH 10.0
-#define MAX_TESS min(16, maxTessLevel)
+#define MAX_EDGE_LENGTH 12.0
+#define MAX_TESS min(12, maxTessLevel)
 
 vec2 getScreenPos(in vec4 ViewPoint)
 {
@@ -61,9 +61,9 @@ void main()
         float l3 = (l0 + l1 + l2) / 3.0;
         vec3 position3 = normalize((position_cs_in[0] + position_cs_in[1] + position_cs_in[2]) / 3.0);
 
-        vec4 noise0 = height_map(normalize(position_cs_in[0]), START_LEVEL, MAX_LEVEL - 5, 1.0);
-        vec4 noise1 = height_map(normalize(position_cs_in[1]), START_LEVEL, MAX_LEVEL - 5, 1.0);
-        vec4 noise2 = height_map(normalize(position_cs_in[2]), START_LEVEL, MAX_LEVEL - 5, 1.0);
+        vec4 noise0 = height_map((position_cs_in[0]) / l0, START_LEVEL, MAX_LEVEL - 5, 1.0);
+        vec4 noise1 = height_map((position_cs_in[1]) / l1, START_LEVEL, MAX_LEVEL - 5, 1.0);
+        vec4 noise2 = height_map((position_cs_in[2]) / l2, START_LEVEL, MAX_LEVEL - 5, 1.0);
         vec4 noise3 = height_map(position3, START_LEVEL, MAX_LEVEL - 5, 1.0);
 
         vec4 pp[4];

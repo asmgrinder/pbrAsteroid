@@ -105,13 +105,13 @@ void main()
 	{
 		discard;
 	}
-    float levelCount = clamp(20.45 + (log(koef_scr_diff_fs_in.y)) / log(2.0), START_LEVEL, MAX_LEVEL) - START_LEVEL;
+    float levelCount = clamp(20.1 + (log(koef_scr_diff_fs_in.y)) / log(2.0), START_LEVEL, MAX_LEVEL) - START_LEVEL;
 	float smoothing = exp(0.4 * log(koef_scr_diff_fs_in.x));
 	vec4 noise = height_map(normalize(mesh_pos_fs_in), START_LEVEL, levelCount, smoothing);
 
-	if (koef_scr_diff_fs_in.y > 0 && koef_scr_diff_fs_in.x < 0.75)
+	if (koef_scr_diff_fs_in.y > 0)
 	{
-		float _ang = 0.00008 / length(mesh_pos_fs_in) / koef_scr_diff_fs_in.y;
+		float _ang = 0.00006 / length(mesh_pos_fs_in) / koef_scr_diff_fs_in.y;
 		vec3 _eyeDir = normalize(vec3(inverse(modelViewMat) * vec4(0, 0, 0, 1)) - mesh_pos_fs_in);
 		vec3 _nml = normalize(tangent_basis_fs_in * vec3(0., 0., 1.));
 		vec3 _axis = normalize(cross(_eyeDir, _nml));
