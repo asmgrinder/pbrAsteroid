@@ -26,18 +26,18 @@ layout(location=4) out mat3 tangent_basis_fs_in;
 
 vec2 interpolate2D(vec2 v0, vec2 v1, vec2 v2)
 {
-    return vec2(gl_TessCoord.x) * v0 + vec2(gl_TessCoord.y) * v1 + vec2(gl_TessCoord.z) * v2;
+    return gl_TessCoord.x * v0 + gl_TessCoord.y * v1 + gl_TessCoord.z * v2;
 }
 
 vec3 interpolate3D(vec3 v0, vec3 v1, vec3 v2)
 {
-    return vec3(gl_TessCoord.x) * v0 + vec3(gl_TessCoord.y) * v1 + vec3(gl_TessCoord.z) * v2;
+    return gl_TessCoord.x * v0 + gl_TessCoord.y * v1 + gl_TessCoord.z * v2;
 }
 
 vec3 interpolateHeight(vec3 v0, vec3 v1, vec3 v2)
 {
 	float newHeight = gl_TessCoord.x * length(v0) + gl_TessCoord.y * length(v1) + gl_TessCoord.z * length(v2);
-	return newHeight * normalize(vec3(gl_TessCoord.x) * v0 + vec3(gl_TessCoord.y) * v1 + vec3(gl_TessCoord.z) * v2);
+	return newHeight * normalize(gl_TessCoord.x * v0 + gl_TessCoord.y * v1 + gl_TessCoord.z * v2);
 }
 
 vec2 getScreenPos(in vec4 ViewPoint)

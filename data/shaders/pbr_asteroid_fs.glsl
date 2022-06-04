@@ -105,35 +105,22 @@ void main()
 	{
 		discard;
 	}
-    float levelCount = clamp(20.2 + (log(koef_scr_diff_fs_in.y)) / log(2.0), START_LEVEL, MAX_LEVEL) - START_LEVEL;
-	float smoothing = exp(0.25 * log(koef_scr_diff_fs_in.x));
+    float levelCount = clamp(20.25 + (log(koef_scr_diff_fs_in.y)) / log(2.0), START_LEVEL, MAX_LEVEL) - START_LEVEL;
+	float smoothing = exp(0.4 * log(koef_scr_diff_fs_in.x));
 	vec4 noise = height_map(normalize(mesh_pos_fs_in), START_LEVEL, levelCount, smoothing);
 
 	if (koef_scr_diff_fs_in.y > 0 && koef_scr_diff_fs_in.x < 0.75)
 	{
-		float _ang = 0.00005 / length(mesh_pos_fs_in) / koef_scr_diff_fs_in.y;
+		float _ang = 0.00008 / length(mesh_pos_fs_in) / koef_scr_diff_fs_in.y;
 		vec3 _eyeDir = normalize(vec3(inverse(modelViewMat) * vec4(0, 0, 0, 1)) - mesh_pos_fs_in);
 		vec3 _nml = normalize(tangent_basis_fs_in * vec3(0., 0., 1.));
-		// vec3 _axis1 = normalize(cross(_eyeDir, _nml));
-		// vec3 _axis2 = normalize(cross(_axis1, _nml));
-		// vec3 pos1 = normalize(rotationMatrix(_axis1,  _ang) * mesh_pos_fs_in);
-		// vec3 pos2 = normalize(rotationMatrix(_axis1, -_ang) * mesh_pos_fs_in);
-		// vec3 pos3 = normalize(rotationMatrix(_axis2,  _ang) * mesh_pos_fs_in);
-		// vec3 pos4 = normalize(rotationMatrix(_axis2, -_ang) * mesh_pos_fs_in);
-		// vec4 noise1 = height_map(pos1, START_LEVEL, levelCount, smoothing);
-		// vec4 noise2 = height_map(pos2, START_LEVEL, levelCount, smoothing);
-		// vec4 noise3 = height_map(pos3, START_LEVEL, levelCount, smoothing);
-		// vec4 noise4 = height_map(pos4, START_LEVEL, levelCount, smoothing);
-		// vec3 v1 = pos1 * (1.0 + 0.2 * noise1.a) - pos2 * (1.0 + 0.2 * noise2.a);
-		// vec3 v2 = pos3 * (1.0 + 0.2 * noise3.a) - pos4 * (1.0 + 0.2 * noise4.a);
-		// float nmldiff = 1.0 - dot(noise.xyz, normalize(cross(v2, v1)));
 		vec3 _axis = normalize(cross(_eyeDir, _nml));
 		noise.xyz += height_map(normalize(rotationMatrix(_axis,  _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;		
 // 		noise.xyz += height_map(normalize(rotationMatrix(_axis, -_ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
-		if (koef_scr_diff_fs_in.x < 0.45)
+		if (koef_scr_diff_fs_in.x < 0.35)
 		{
-// 			noise.xyz += height_map(normalize(rotationMatrix(_axis,  2.0 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
-			noise.xyz += height_map(normalize(rotationMatrix(_axis, -2.0 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
+			noise.xyz += height_map(normalize(rotationMatrix(_axis,  1.5 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
+			noise.xyz += height_map(normalize(rotationMatrix(_axis, -1.5 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
 		}
 		noise.xyz = normalize(noise.xyz);
 	}

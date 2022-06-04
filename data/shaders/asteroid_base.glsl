@@ -18,7 +18,7 @@
 
 float random3D(in vec3 p)
 {
-	vec2 arg = (p.xy + 10.0) * (2. + log(p.z + 11.0));
+	vec2 arg = (p.xy + PHI) * (7.0 + log(p.z + 11.0));
 	return fract(sin(dot(arg * rads(180) / 4096., vec2(12.9898, 78.233))) * 43758.5453123);
 }
 
@@ -244,7 +244,7 @@ float getDissolve(in float LastLevel, in int Level, in float Multiplier)
 	if (Level >= LastLevel - shift)
 	{
 		lvl = cos(rads(90) * clamp((Level - (LastLevel - shift)) / shift, 0., 1.));
-		lvl = clamp(lvl * lvl - 0.04761904761904767, 0., 1.) * 1.05;
+		lvl = lvl * lvl * 1.05;
 	}
 	dissolve *= lvl * (1. - Multiplier) + Multiplier;
 
