@@ -1,5 +1,5 @@
 
-#define height_mapping(x) (0.999 + 0.1 * x)
+#define height_mapping(x) (0.999 + 0.125 * x)
 
 #define rads(x) (x * 3.1415926535897932384626433832795 / 180)
 

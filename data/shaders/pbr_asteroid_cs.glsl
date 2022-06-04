@@ -82,8 +82,10 @@ void main()
         p2 *= sign(p2.w);
         p3 *= sign(p3.w);
 
-        const float mult = 2.5;
-        if (   p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w && p3.x >  mult * p3.w
+        const float mult = 2.25;
+        vec3 nml = normalize(cross(pp[2].xyz - pp[0].xyz, pp[1].xyz - pp[0].xyz));
+        if (dot(nml, normalize(pp[3].xyz)) < -0.2
+            || p0.x >  mult * p0.w && p1.x >  mult * p1.w && p2.x >  mult * p2.w && p3.x >  mult * p3.w
             || p0.x < -mult * p0.w && p1.x < -mult * p1.w && p2.x < -mult * p2.w && p3.x < -mult * p3.w
             || p0.y >  mult * p0.w && p1.y >  mult * p1.w && p2.y >  mult * p2.w && p3.y >  mult * p3.w
             || p0.y < -mult * p0.w && p1.y < -mult * p1.w && p2.y < -mult * p2.w && p3.y < -mult * p3.w)
