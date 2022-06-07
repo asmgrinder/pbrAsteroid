@@ -4,8 +4,8 @@
 
 // Tone-mapping & gamma correction.
 
-const float gamma     = 1.7;
-const float exposure  = 0.5;
+const float gamma     = 1.8;
+const float exposure  = 0.35;
 const float pureWhite = 1.0;
 
 layout(location=0) in  vec2 screenPosition;

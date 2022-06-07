@@ -136,7 +136,7 @@ void main()
 
 	vec4 albedoColor = texture(albedoTexture, texcoord_fs_in);
 	vec3 albedo = vec3(6.0 * exp(2.5 * log(noise.a))) * albedoColor.rgb;
-	float metalness = 0.1;//texture(metalnessTexture, vin.texcoord).r;
+	float metalness = 0.05;//texture(metalnessTexture, vin.texcoord).r;
 	float roughness = 0.9;//texture(roughnessTexture, vin.texcoord).r;
 
 	// Outgoing light direction (vector from world-space fragment position to the "eye").
