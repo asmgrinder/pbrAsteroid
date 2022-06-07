@@ -83,7 +83,7 @@ GLFWwindow* Renderer::initialize(int width, int height, int maxSamples)
 		}
 	}
 
-	mCameraPtr = std::make_shared<Camera>(glm::radians(45.f), glm::vec2{ width, height }, 0.25f, 5000.0f);
+	mCameraPtr = std::make_shared<Camera>(glm::radians(60.0f), glm::vec2{ width, height }, 0.25f, 5000.0f);
 	mCameraPtr->SetPosition(glm::vec3{ 0, 0, 1000 });
 
 	std::cout << "OpenGL 4.5 renderer [" << glGetString(GL_RENDERER) << "]" << std::endl;
