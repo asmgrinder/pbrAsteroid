@@ -19,7 +19,7 @@
 float random3D(in vec3 p)
 {
 	vec2 arg = (p.xy + PHI) * (7.0 + log(p.z + 11.0));
-	return fract(sin(dot(arg * rads(180) / 2048., vec2(12.9898, 78.233))) * 43758.5453123);
+	return fract(sin(dot(arg * rads(180) / 1021., vec2(12.9898, 78.233))) * 43758.5453123);
 }
 
 float random2D (in vec2 p)
