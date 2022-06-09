@@ -117,9 +117,9 @@ void main()
 		vec3 _axis = normalize(cross(_eyeDir, _nml));
 		noise.xyz += height_map(normalize(rotationMatrix(_axis,  _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;		
 // 		noise.xyz += height_map(normalize(rotationMatrix(_axis, -_ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
-		if (koef_scr_diff_fs_in.x < 0.35)
+		if (koef_scr_diff_fs_in.x < 0.3)
 		{
-			noise.xyz += height_map(normalize(rotationMatrix(_axis,  1.5 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
+// 			noise.xyz += height_map(normalize(rotationMatrix(_axis,  1.5 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
 			noise.xyz += height_map(normalize(rotationMatrix(_axis, -1.5 * _ang) * mesh_pos_fs_in), START_LEVEL, levelCount, smoothing).xyz;
 		}
 		noise.xyz = normalize(noise.xyz);
