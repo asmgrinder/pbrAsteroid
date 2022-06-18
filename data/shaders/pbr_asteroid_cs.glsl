@@ -59,7 +59,7 @@ void main()
         float l1 = length(position_cs_in[1]);
         float l2 = length(position_cs_in[2]);
         float l3 = (l0 + l1 + l2) / 3.0;
-        vec3 position3 = normalize((position_cs_in[0] + position_cs_in[1] + position_cs_in[2]) / 3.0);
+        vec3 position3 = normalize(position_cs_in[0] + position_cs_in[1] + position_cs_in[2]);
 
         vec4 noise0 = height_map((position_cs_in[0]) / l0, START_LEVEL, MAX_LEVEL - 5, 1.0);
         vec4 noise1 = height_map((position_cs_in[1]) / l1, START_LEVEL, MAX_LEVEL - 5, 1.0);
