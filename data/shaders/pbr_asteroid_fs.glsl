@@ -105,7 +105,7 @@ void main()
 	{
 		discard;
 	}
-    float levelCount = clamp(20.1 + (log(koef_scr_diff_fs_in.y)) / log(2.0), START_LEVEL, MAX_LEVEL) - START_LEVEL;
+    float levelCount = clamp(20.5 + (log(koef_scr_diff_fs_in.y)) / log(2.0), START_LEVEL, MAX_LEVEL) - START_LEVEL;
 	float smoothing = exp(0.3 * log(koef_scr_diff_fs_in.x));
 	vec4 noise = height_map(normalize(mesh_pos_fs_in), START_LEVEL, levelCount, smoothing);
 
