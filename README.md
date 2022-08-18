@@ -26,3 +26,6 @@ Only fbx and obj support in assimp are required. Support for other formats can b
 
 # Known problems
 I didn't have opportunity to debug this (still rather raw code) on many enough systems, therefore there is no guarantee that it will run everywhere. So this code is provided as is, with no warranty of any kind. I hope that this code can be source for new ideas.
+
+# Contacts
+Feel free to contact me on Skype (codegrinder).
